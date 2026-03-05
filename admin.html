@@ -119,6 +119,95 @@
             color: #ef4444;
         }
 
+        .section-nav {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        .section-nav__btn {
+            background: none;
+            border: none;
+            color: var(--text-color-light);
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            font-weight: var(--font-medium);
+            transition: color 0.3s;
+        }
+
+        .section-nav__btn.active {
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .section-nav__btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+
+        .admin__section {
+            display: none;
+        }
+
+        .admin__section.active {
+            display: block;
+        }
+
+        .items-list {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .item-card {
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .item-info h4 {
+            color: var(--title-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .item-info p {
+            font-size: var(--small-font-size);
+            color: var(--text-color-light);
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn-icon {
+            background: none;
+            border: none;
+            color: var(--text-color-light);
+            cursor: pointer;
+            font-size: 1.25rem;
+            transition: color 0.3s;
+        }
+
+        .btn-icon:hover {
+            color: var(--primary-color);
+        }
+
+        .btn-icon--delete:hover {
+            color: #ef4444;
+        }
+
         @media screen and (max-width: 768px) {
             .admin__form {
                 grid-template-columns: 1fr;
@@ -149,47 +238,125 @@
                     </div>
                 </div>
 
-                <div class="admin__card">
-                    <form id="settings-form" class="admin__form">
-                        <div class="form__group">
-                            <label for="email" class="form__label"><i class="ph ph-envelope-simple"></i> E-mail de
-                                Contato</label>
-                            <input type="email" id="email" class="form__input" placeholder="exemplo@email.com">
-                        </div>
+                <div class="section-nav">
+                    <button class="section-nav__btn active" data-target="settings">Configurações</button>
+                    <button class="section-nav__btn" data-target="projects">Projetos</button>
+                    <button class="section-nav__btn" data-target="skills">Habilidades</button>
+                </div>
 
-                        <div class="form__group">
-                            <label for="phone" class="form__label"><i class="ph ph-whatsapp-logo"></i> Telefone /
-                                WhatsApp</label>
-                            <input type="text" id="phone" class="form__input" placeholder="+55 (11) 99999-9999">
-                        </div>
+                <div id="settings-section" class="admin__section active">
+                    <div class="admin__card">
+                        <form id="settings-form" class="admin__form">
+                            <!-- ... campos existentes ... -->
+                            <div class="form__group">
+                                <label for="email" class="form__label"><i class="ph ph-envelope-simple"></i> E-mail de
+                                    Contato</label>
+                                <input type="email" id="email" class="form__input" placeholder="exemplo@email.com">
+                            </div>
+                            <div class="form__group">
+                                <label for="phone" class="form__label"><i class="ph ph-whatsapp-logo"></i> Telefone /
+                                    WhatsApp</label>
+                                <input type="text" id="phone" class="form__input" placeholder="+55 (11) 99999-9999">
+                            </div>
+                            <div class="form__group">
+                                <label for="github" class="form__label"><i class="ph ph-github-logo"></i> Link do
+                                    GitHub</label>
+                                <input type="url" id="github" class="form__input"
+                                    placeholder="https://github.com/seu-usuario">
+                            </div>
+                            <div class="form__group">
+                                <label for="linkedin" class="form__label"><i class="ph ph-linkedin-logo"></i> Link do
+                                    LinkedIn</label>
+                                <input type="url" id="linkedin" class="form__input"
+                                    placeholder="https://linkedin.com/in/seu-usuario">
+                            </div>
+                            <div class="form__group full-width">
+                                <label for="resume" class="form__label"><i class="ph ph-file-pdf"></i> Link do Currículo
+                                    (Opcional)</label>
+                                <input type="url" id="resume" class="form__input"
+                                    placeholder="URL do Google Drive ou semelhante">
+                            </div>
+                            <div class="admin__actions">
+                                <button type="submit" class="button button--primary" id="save-settings-btn">
+                                    Salvar Alterações <i class="ph ph-floppy-disk"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
 
-                        <div class="form__group">
-                            <label for="github" class="form__label"><i class="ph ph-github-logo"></i> Link do
-                                GitHub</label>
-                            <input type="url" id="github" class="form__input"
-                                placeholder="https://github.com/seu-usuario">
-                        </div>
+                <div id="projects-section" class="admin__section">
+                    <div class="admin__card">
+                        <h2 style="margin-bottom: 1.5rem;">Gerenciar Projetos</h2>
+                        <form id="project-form" class="admin__form">
+                            <input type="hidden" id="project-id">
+                            <div class="form__group">
+                                <label for="project-title" class="form__label">Título do Projeto</label>
+                                <input type="text" id="project-title" class="form__input" required>
+                            </div>
+                            <div class="form__group">
+                                <label for="project-subtitle" class="form__label">Subtítulo (Ex: E-commerce)</label>
+                                <input type="text" id="project-subtitle" class="form__input">
+                            </div>
+                            <div class="form__group full-width">
+                                <label for="project-desc" class="form__label">Descrição</label>
+                                <textarea id="project-desc" class="form__input"
+                                    style="min-height: 100px; resize: vertical;"></textarea>
+                            </div>
+                            <div class="form__group">
+                                <label for="project-tags" class="form__label">Tags (Separadas por vírgula)</label>
+                                <input type="text" id="project-tags" class="form__input" placeholder="React, Node.js">
+                            </div>
+                            <div class="form__group">
+                                <label for="project-link" class="form__label">Link do Projeto / Demo</label>
+                                <input type="url" id="project-link" class="form__input">
+                            </div>
+                            <div class="admin__actions">
+                                <button type="button" id="cancel-project-btn" class="button button--nav"
+                                    style="display: none;">Cancelar</button>
+                                <button type="submit" class="button button--primary" id="save-project-btn">Adicionar
+                                    Projeto <i class="ph ph-plus"></i></button>
+                            </div>
+                        </form>
 
-                        <div class="form__group">
-                            <label for="linkedin" class="form__label"><i class="ph ph-linkedin-logo"></i> Link do
-                                LinkedIn</label>
-                            <input type="url" id="linkedin" class="form__input"
-                                placeholder="https://linkedin.com/in/seu-usuario">
+                        <div id="projects-list" class="items-list">
+                            <!-- JS will load projects here -->
                         </div>
+                    </div>
+                </div>
 
-                        <div class="form__group full-width">
-                            <label for="resume" class="form__label"><i class="ph ph-file-pdf"></i> Link do Currículo
-                                (Opcional)</label>
-                            <input type="url" id="resume" class="form__input"
-                                placeholder="URL do Google Drive ou semelhante">
-                        </div>
+                <div id="skills-section" class="admin__section">
+                    <div class="admin__card">
+                        <h2 style="margin-bottom: 1.5rem;">Gerenciar Habilidades</h2>
+                        <form id="skill-form" class="admin__form">
+                            <input type="hidden" id="skill-id">
+                            <div class="form__group">
+                                <label for="skill-name" class="form__label">Nome da Habilidade</label>
+                                <input type="text" id="skill-name" class="form__input" required>
+                            </div>
+                            <div class="form__group">
+                                <label for="skill-category" class="form__label">Categoria</label>
+                                <select id="skill-category" class="form__input">
+                                    <option value="Frontend">Frontend</option>
+                                    <option value="Backend">Backend & Ferramentas</option>
+                                </select>
+                            </div>
+                            <div class="form__group">
+                                <label for="skill-icon" class="form__label">Ícone Phosphor (Ex: ph-atom)</label>
+                                <input type="text" id="skill-icon" class="form__input" placeholder="ph-atom">
+                            </div>
+                            <div class="admin__actions">
+                                <button type="button" id="cancel-skill-btn" class="button button--nav"
+                                    style="display: none;">Cancelar</button>
+                                <button type="submit" class="button button--primary" id="save-skill-btn">Adicionar
+                                    Habilidade <i class="ph ph-plus"></i></button>
+                            </div>
+                        </form>
 
-                        <div class="admin__actions">
-                            <button type="submit" class="button button--primary" id="save-btn">
-                                Salvar Alterações <i class="ph ph-floppy-disk"></i>
-                            </button>
+                        <div id="skills-list" class="items-list">
+                            <!-- JS will load skills here -->
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </section>
