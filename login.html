@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | Felipe.dev</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .login {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login__card {
+            background-color: var(--container-color);
+            border: 1px solid var(--border-color);
+            padding: 3rem;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 450px;
+            backdrop-filter: blur(16px);
+            text-align: center;
+        }
+
+        .login__title {
+            font-size: var(--h2-font-size);
+            margin-bottom: var(--mb-2);
+        }
+
+        .login__form {
+            display: grid;
+            gap: 1.5rem;
+            text-align: left;
+        }
+
+        .form__group {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .form__label {
+            font-size: var(--small-font-size);
+            font-weight: var(--font-medium);
+            color: var(--title-color);
+        }
+
+        .form__input {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-family: var(--body-font);
+            font-size: var(--normal-font-size);
+            transition: border-color 0.3s;
+        }
+
+        .form__input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .login__button {
+            width: 100%;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .login__error {
+            color: #ef4444;
+            font-size: var(--small-font-size);
+            text-align: center;
+            display: none;
+            margin-top: 1rem;
+        }
+
+        .login__back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-color-light);
+            font-size: var(--small-font-size);
+            margin-top: 2rem;
+            transition: color 0.3s;
+        }
+
+        .login__back:hover {
+            color: var(--title-color);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Elements -->
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+
+    <main class="main">
+        <section class="login section">
+            <div class="login__card">
+                <i class="ph ph-lock-key"
+                    style="font-size: 3rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
+                <h2 class="login__title">Área Restrita</h2>
+
+                <form id="login-form" class="login__form">
+                    <div class="form__group">
+                        <label for="email" class="form__label">E-mail</label>
+                        <input type="email" id="email" class="form__input" placeholder="admin@email.com" required>
+                    </div>
+
+                    <div class="form__group">
+                        <label for="password" class="form__label">Senha</label>
+                        <input type="password" id="password" class="form__input" placeholder="••••••••" required>
+                    </div>
+
+                    <button type="submit" class="button button--primary login__button" id="login-btn">
+                        Entrar <i class="ph ph-sign-in"></i>
+                    </button>
+
+                    <p id="error-msg" class="login__error">E-mail ou senha incorretos.</p>
+                </form>
+
+                <a href="index.html" class="login__back"><i class="ph ph-arrow-left"></i> Voltar ao Portfólio</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module" src="js/supabase-client.js"></script>
+    <script type="module" src="js/login.js"></script>
+</body>
+
+</html>

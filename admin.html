@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin | Felipe.dev</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .admin {
+            padding-top: 8rem;
+            min-height: 100vh;
+        }
+
+        .admin__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--mb-3);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        .admin__card {
+            background-color: var(--container-color);
+            border: 1px solid var(--border-color);
+            padding: 2.5rem;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .admin__form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .form__group {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .form__group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form__label {
+            font-size: var(--small-font-size);
+            font-weight: var(--font-medium);
+            color: var(--title-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form__input {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-family: var(--body-font);
+            font-size: var(--normal-font-size);
+            transition: border-color 0.3s;
+        }
+
+        .form__input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .admin__actions {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            grid-column: 1 / -1;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--container-color);
+            border: 1px solid var(--border-color);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success i {
+            color: #10b981;
+        }
+
+        .toast.error i {
+            color: #ef4444;
+        }
+
+        @media screen and (max-width: 768px) {
+            .admin__form {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body style="display: none;"> <!-- Hidden until auth is checked -->
+    <!-- Background Elements -->
+    <div class="glow glow-1"></div>
+
+    <main class="main">
+        <section class="admin section">
+            <div class="container">
+                <div class="admin__header">
+                    <div>
+                        <h1 class="section__title" style="margin-bottom: 0.5rem; transform: none; left: 0;">Painel
+                            Administrativo</h1>
+                        <p>Gerencie as informações de contato do seu portfólio.</p>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <a href="index.html" class="button button--nav" target="_blank">Ver Site <i
+                                class="ph ph-arrow-square-out"></i></a>
+                        <button id="logout-btn" class="button button--nav"
+                            style="color: #ef4444; border-color: rgba(239, 68, 68, 0.3);">Sair <i
+                                class="ph ph-sign-out"></i></button>
+                    </div>
+                </div>
+
+                <div class="admin__card">
+                    <form id="settings-form" class="admin__form">
+                        <div class="form__group">
+                            <label for="email" class="form__label"><i class="ph ph-envelope-simple"></i> E-mail de
+                                Contato</label>
+                            <input type="email" id="email" class="form__input" placeholder="exemplo@email.com">
+                        </div>
+
+                        <div class="form__group">
+                            <label for="phone" class="form__label"><i class="ph ph-whatsapp-logo"></i> Telefone /
+                                WhatsApp</label>
+                            <input type="text" id="phone" class="form__input" placeholder="+55 (11) 99999-9999">
+                        </div>
+
+                        <div class="form__group">
+                            <label for="github" class="form__label"><i class="ph ph-github-logo"></i> Link do
+                                GitHub</label>
+                            <input type="url" id="github" class="form__input"
+                                placeholder="https://github.com/seu-usuario">
+                        </div>
+
+                        <div class="form__group">
+                            <label for="linkedin" class="form__label"><i class="ph ph-linkedin-logo"></i> Link do
+                                LinkedIn</label>
+                            <input type="url" id="linkedin" class="form__input"
+                                placeholder="https://linkedin.com/in/seu-usuario">
+                        </div>
+
+                        <div class="form__group full-width">
+                            <label for="resume" class="form__label"><i class="ph ph-file-pdf"></i> Link do Currículo
+                                (Opcional)</label>
+                            <input type="url" id="resume" class="form__input"
+                                placeholder="URL do Google Drive ou semelhante">
+                        </div>
+
+                        <div class="admin__actions">
+                            <button type="submit" class="button button--primary" id="save-btn">
+                                Salvar Alterações <i class="ph ph-floppy-disk"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i class="ph ph-check-circle" style="font-size: 1.5rem;"></i>
+        <span>Alterações salvas com sucesso!</span>
+    </div>
+
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module" src="js/supabase-client.js"></script>
+    <script type="module" src="js/admin.js"></script>
+</body>
+
+</html>

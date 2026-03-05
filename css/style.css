@@ -7,21 +7,21 @@
   --hue: 220;
   --bg-color: hsl(var(--hue), 20%, 4%);
   --bg-color-alt: hsl(var(--hue), 20%, 8%);
-  
+
   --title-color: hsl(var(--hue), 20%, 95%);
   --text-color: hsl(var(--hue), 15%, 70%);
   --text-color-light: hsl(var(--hue), 15%, 50%);
-  
+
   --primary-color: hsl(var(--hue), 100%, 65%);
   --primary-color-hover: hsl(var(--hue), 100%, 55%);
   --gradient-1: linear-gradient(135deg, hsl(var(--hue), 100%, 65%), hsl(280, 100%, 65%));
-  
+
   --border-color: hsl(var(--hue), 15%, 15%);
   --container-color: rgba(255, 255, 255, 0.02);
-  
+
   /* Font and typography */
   --body-font: 'Inter', sans-serif;
-  
+
   /* responsive typography */
   --biggest-font-size: 3rem;
   --h1-font-size: 2.25rem;
@@ -30,14 +30,14 @@
   --normal-font-size: 1rem;
   --small-font-size: 0.875rem;
   --smaller-font-size: 0.813rem;
-  
+
   /* Font weight */
   --font-light: 300;
   --font-regular: 400;
   --font-medium: 500;
   --font-semi-bold: 600;
   --font-bold: 700;
-  
+
   /* Margins */
   --mb-0-5: 0.5rem;
   --mb-1: 1rem;
@@ -84,7 +84,10 @@ body {
   position: relative;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   color: var(--title-color);
   font-weight: var(--font-semi-bold);
   line-height: 1.2;
@@ -222,7 +225,7 @@ img {
 }
 
 .header.scroll-header {
-  background: rgba(var(--hue), 20%, 4%, 0.8);
+  background: hsla(var(--hue), 20%, 4%, 0.8);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-color);
 }
@@ -380,7 +383,7 @@ img {
 
 .projects__card:hover {
   transform: translateY(-5px);
-  border-color: rgba(255,255,255, 0.1);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .projects__image-wrapper {
@@ -433,10 +436,10 @@ img {
 .projects__tag {
   font-size: var(--smaller-font-size);
   color: var(--text-color-light);
-  background-color: rgba(255,255,255, 0.05);
+  background-color: rgba(255, 255, 255, 0.05);
   padding: 0.25rem 0.75rem;
   border-radius: 4px;
-  border: 1px solid rgba(255,255,255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .projects__button {
@@ -500,7 +503,7 @@ img {
 
 .skills__item:hover {
   border-color: var(--primary-color);
-  background-color: rgba(255,255,255, 0.05);
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 /*=============== CONTACT ===============*/
@@ -598,7 +601,7 @@ img {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
-  
+
   .about__info {
     border-left: none;
     padding-left: 0;
@@ -618,11 +621,11 @@ img {
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .projects__card {
     grid-template-columns: 1fr;
   }
-  
+
   .footer__container {
     flex-direction: column;
     gap: 1.5rem;
