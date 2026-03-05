@@ -38,8 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw error;
             }
 
-            // Redirecionar para admin.html em caso de sucesso
-            window.location.href = 'admin.html';
+            // Redirecionar para admin em caso de sucesso
+            window.location.href = 'admin';
 
         } catch (error) {
             console.error('Erro de login:', error.message);
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const checkSession = async () => {
         const { data: { session } } = await supabase.auth.getSession();
         if (session) {
-            window.location.href = 'admin.html';
+            window.location.href = 'admin';
         }
     };
 

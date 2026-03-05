@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (error || !session) {
             // Não autorizado, mandar para login
-            window.location.replace('login.html');
+            window.location.replace('login');
             return null;
         }
 
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     logoutBtn.addEventListener('click', async () => {
         try {
             await supabase.auth.signOut();
-            window.location.replace('login.html');
+            window.location.replace('login');
         } catch (error) {
             console.error('Erro no logout:', error.message);
         }
