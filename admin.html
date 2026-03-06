@@ -312,9 +312,18 @@
                                 <input type="url" id="project-link" class="form__input">
                             </div>
                             <div class="form__group">
-                                <label for="project-image" class="form__label">URL da Imagem</label>
-                                <input type="url" id="project-image" class="form__input"
-                                    placeholder="https://exemplo.com/imagem.png">
+                                <label class="form__label">Imagem do Projeto</label>
+                                <div style="display: flex; gap: 1rem; align-items: center;">
+                                    <input type="file" id="project-image-file" class="form__input" accept="image/*"
+                                        style="flex: 1;">
+                                    <!-- Hide the original URL input, keep it to store the final link -->
+                                    <input type="hidden" id="project-image">
+                                </div>
+                                <div id="project-image-preview"
+                                    style="margin-top: 1rem; max-width: 200px; display: none;">
+                                    <img src="" alt="Preview"
+                                        style="border-radius: 8px; border: 1px solid var(--border-color);">
+                                </div>
                             </div>
                             <div class="admin__actions">
                                 <button type="button" id="cancel-project-btn" class="button button--nav"

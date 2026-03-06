@@ -53,6 +53,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const projectTagsInput = document.getElementById('project-tags');
     const projectLinkInput = document.getElementById('project-link');
     const projectImageInput = document.getElementById('project-image');
+    const projectImageFileInput = document.getElementById('project-image-file');
+    const projectImagePreview = document.getElementById('project-image-preview');
+    const projectImagePreviewImg = projectImagePreview.querySelector('img');
     const cancelProjectBtn = document.getElementById('cancel-project-btn');
     const projectsList = document.getElementById('projects-list');
 
@@ -160,6 +163,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             projectTagsInput.value = (data.tags || []).join(', ');
             projectLinkInput.value = data.link || '';
             projectImageInput.value = data.image_url || '';
+            projectImageFileInput.value = ''; // Reset file input
+
+            if (data.image_url) {
+                projectImagePreview.style.display = 'block';
+                projectImagePreviewImg.src = data.image_url;
+            } else {
+                projectImagePreview.style.display = 'none';
+                projectImagePreviewImg.src = '';
+            }
 
             document.getElementById('save-project-btn').innerHTML = 'Atualizar Projeto <i class="ph ph-check"></i>';
             cancelProjectBtn.style.display = 'block';
@@ -177,6 +189,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     cancelProjectBtn.addEventListener('click', () => {
         projectForm.reset();
         projectIdInput.value = '';
+        projectImageInput.value = '';
+        projectImagePreview.style.display = 'none';
+        projectImagePreviewImg.src = '';
         document.getElementById('save-project-btn').innerHTML = 'Adicionar Projeto <i class="ph ph-plus"></i>';
         cancelProjectBtn.style.display = 'none';
     });
@@ -184,16 +199,46 @@ document.addEventListener('DOMContentLoaded', async () => {
     projectForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const id = projectIdInput.value;
+
+        setLoading(document.getElementById('save-project-btn'), true, '');
+
+        let finalImageUrl = projectImageInput.value;
+
+        // Verify if a new file was selected for upload
+        if (projectImageFileInput.files && projectImageFileInput.files.length > 0) {
+            const file = projectImageFileInput.files[0];
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${Math.random()}.${fileExt}`;
+            const filePath = `${fileName}`;
+
+            // Upload the file to the 'project-images' bucket
+            const { error: uploadError } = await supabase.storage
+                .from('project-images')
+                .upload(filePath, file);
+
+            if (uploadError) {
+                setLoading(document.getElementById('save-project-btn'), false, id ? 'Atualizar Projeto <i class="ph ph-check"></i>' : 'Adicionar Projeto <i class="ph ph-plus"></i>');
+                showToast('Erro ao fazer upload da imagem', true);
+                return;
+            }
+
+            // Get the public URL
+            const { data: { publicUrl } } = supabase.storage
+                .from('project-images')
+                .getPublicUrl(filePath);
+
+            finalImageUrl = publicUrl;
+        }
+
         const payload = {
             title: projectTitleInput.value,
             subtitle: projectSubtitleInput.value,
             description: projectDescInput.value,
             tags: projectTagsInput.value.split(',').map(t => t.trim()).filter(t => t),
             link: projectLinkInput.value,
-            image_url: projectImageInput.value || null,
+            image_url: finalImageUrl || null,
         };
 
-        setLoading(document.getElementById('save-project-btn'), true, '');
         const { error } = id
             ? await supabase.from('projects').update(payload).eq('id', id)
             : await supabase.from('projects').insert([payload]);
@@ -275,6 +320,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             showToast(id ? 'Habilidade atualizada' : 'Habilidade adicionada');
             cancelSkillBtn.click();
             loadSkills();
+        }
+    });
+
+    // =========== FILE PREVIEW ===========
+    projectImageFileInput.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                projectImagePreview.style.display = 'block';
+                projectImagePreviewImg.src = e.target.result;
+            }
+            reader.readAsDataURL(e.target.files[0]);
         }
     });
 
