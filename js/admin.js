@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const projectDescInput = document.getElementById('project-desc');
     const projectTagsInput = document.getElementById('project-tags');
     const projectLinkInput = document.getElementById('project-link');
+    const projectImageInput = document.getElementById('project-image');
     const cancelProjectBtn = document.getElementById('cancel-project-btn');
     const projectsList = document.getElementById('projects-list');
 
@@ -158,6 +159,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             projectDescInput.value = data.description || '';
             projectTagsInput.value = (data.tags || []).join(', ');
             projectLinkInput.value = data.link || '';
+            projectImageInput.value = data.image_url || '';
 
             document.getElementById('save-project-btn').innerHTML = 'Atualizar Projeto <i class="ph ph-check"></i>';
             cancelProjectBtn.style.display = 'block';
@@ -188,6 +190,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             description: projectDescInput.value,
             tags: projectTagsInput.value.split(',').map(t => t.trim()).filter(t => t),
             link: projectLinkInput.value,
+            image_url: projectImageInput.value || null,
         };
 
         setLoading(document.getElementById('save-project-btn'), true, '');
