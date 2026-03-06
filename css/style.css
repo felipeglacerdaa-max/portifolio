@@ -5,19 +5,18 @@
 :root {
   /* Colors */
   --hue: 220;
-  --bg-color: hsl(var(--hue), 20%, 4%);
-  --bg-color-alt: hsl(var(--hue), 20%, 8%);
+  --bg-color: hsl(240, 10%, 4%);
+  --bg-color-alt: hsl(240, 10%, 8%);
 
-  --title-color: hsl(var(--hue), 20%, 95%);
-  --text-color: hsl(var(--hue), 15%, 70%);
-  --text-color-light: hsl(var(--hue), 15%, 50%);
+  --title-color: hsl(0, 0%, 95%);
+  --text-color: hsl(240, 5%, 70%);
+  --text-color-light: hsl(240, 5%, 50%);
 
-  --primary-color: hsl(var(--hue), 100%, 65%);
-  --primary-color-hover: hsl(var(--hue), 100%, 55%);
-  --gradient-1: linear-gradient(135deg, hsl(var(--hue), 100%, 65%), hsl(280, 100%, 65%));
+  --primary-color: hsl(220, 90%, 56%);
+  --primary-color-hover: hsl(220, 90%, 50%);
 
-  --border-color: hsl(var(--hue), 15%, 15%);
-  --container-color: rgba(255, 255, 255, 0.02);
+  --border-color: hsl(240, 5%, 12%);
+  --container-color: rgba(255, 255, 255, 0.03);
 
   /* Font and typography */
   --body-font: 'Inter', sans-serif;
@@ -78,6 +77,12 @@ body {
   font-family: var(--body-font);
   font-size: var(--normal-font-size);
   background-color: var(--bg-color);
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(30, 41, 59, 0.4) 0%, transparent 100%),
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 40px 40px, 40px 40px;
+  background-attachment: fixed;
   color: var(--text-color);
   line-height: 1.6;
   overflow-x: hidden;
@@ -158,15 +163,16 @@ img {
 }
 
 .button--primary {
-  background: var(--gradient-1);
+  background-color: var(--primary-color);
   color: #fff;
   border: none;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .button--primary:hover {
+  background-color: var(--primary-color-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(60, 130, 246, 0.3);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
 .button--nav {
@@ -186,32 +192,7 @@ img {
   font-size: var(--h3-font-size);
 }
 
-/*=============== BACKGROUND GLOW ===============*/
-.glow {
-  position: fixed;
-  border-radius: 50%;
-  filter: blur(80px);
-  z-index: -1;
-  opacity: 0.4;
-  pointer-events: none;
-}
-
-.glow-1 {
-  width: 300px;
-  height: 300px;
-  background: var(--primary-color);
-  top: -100px;
-  left: -100px;
-}
-
-.glow-2 {
-  width: 400px;
-  height: 400px;
-  background: hsl(280, 100%, 65%);
-  bottom: -150px;
-  right: -100px;
-  opacity: 0.2;
-}
+/* Legacy neon glow removed */
 
 /*=============== HEADER & NAV ===============*/
 .header {
@@ -363,11 +344,7 @@ img {
 
 /*=============== PROJECTS ===============*/
 .projects {
-  /* Using CSS grid for project layout */
-}
-
-.projects__container {
-  /* Resetting typical single column, adapting for larger screens down below */
+  padding-bottom: 2rem;
 }
 
 .projects__card {
