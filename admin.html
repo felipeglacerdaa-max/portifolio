@@ -271,10 +271,14 @@
                                     placeholder="https://linkedin.com/in/seu-usuario">
                             </div>
                             <div class="form__group full-width">
-                                <label for="resume" class="form__label"><i class="ph ph-file-pdf"></i> Link do Currículo
-                                    (Opcional)</label>
-                                <input type="url" id="resume" class="form__input"
-                                    placeholder="URL do Google Drive ou semelhante">
+                                <label for="resume" class="form__label"><i class="ph ph-file-pdf"></i> Currículo (.pdf)</label>
+                                <div style="display: flex; gap: 1rem; align-items: center;">
+                                    <input type="url" id="resume" class="form__input" placeholder="URL do arquivo ou faça upload ao lado" style="flex: 1;">
+                                    <input type="file" id="resume-file" class="input-file-hidden" accept=".pdf">
+                                    <button type="button" id="upload-resume-btn" class="button button--small button--ghost">
+                                        <i class="ph ph-upload-simple"></i> Upload
+                                    </button>
+                                </div>
                             </div>
                             <div class="admin__actions">
                                 <button type="submit" class="button button--primary" id="save-settings-btn">
@@ -314,8 +318,10 @@
                             <div class="form__group">
                                 <label class="form__label">Imagem do Projeto</label>
                                 <div style="display: flex; gap: 1rem; align-items: center;">
-                                    <input type="file" id="project-image-file" class="form__input" accept="image/*"
-                                        style="flex: 1;">
+                                    <input type="file" id="project-image-file" class="input-file-hidden" accept="image/*">
+                                    <button type="button" id="upload-project-image-btn" class="button button--small button--ghost">
+                                        <i class="ph ph-image"></i> Selecionar Imagem
+                                    </button>
                                     <!-- Hide the original URL input, keep it to store the final link -->
                                     <input type="hidden" id="project-image">
                                 </div>

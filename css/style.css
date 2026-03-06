@@ -192,6 +192,26 @@ img {
   font-size: var(--h3-font-size);
 }
 
+.button--small {
+  padding: 0.5rem 1rem;
+  font-size: var(--smaller-font-size);
+}
+
+.button--ghost {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+}
+
+.button--ghost:hover {
+  background: var(--container-color);
+  border-color: var(--primary-color);
+}
+
+.input-file-hidden {
+  display: none;
+}
+
 /* Legacy neon glow removed */
 
 /*=============== HEADER & NAV ===============*/

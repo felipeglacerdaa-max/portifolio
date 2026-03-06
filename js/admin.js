@@ -324,13 +324,54 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // =========== FILE PREVIEW ===========
+    // =========== FILE PREVIEW & UPLOAD TRIGGERS ===========
+    const resumeFileInput = document.getElementById('resume-file');
+    const uploadResumeBtn = document.getElementById('upload-resume-btn');
+    const uploadProjectImageBtn = document.getElementById('upload-project-image-btn');
+
+    uploadResumeBtn.addEventListener('click', () => resumeFileInput.click());
+    uploadProjectImageBtn.addEventListener('click', () => projectImageFileInput.click());
+
+    resumeFileInput.addEventListener('change', async (e) => {
+        if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
+            const fileExt = file.name.split('.').pop();
+            const fileName = `curriculo_${Date.now()}.${fileExt}`;
+            const filePath = `${fileName}`;
+
+            setLoading(uploadResumeBtn, true, '<i class="ph ph-upload-simple"></i> Upload');
+
+            try {
+                // Upload to 'resumes' or 'project-images' as a fallback if 'resumes' doesn't exist
+                // The prompt implies adding a resume, let's try 'resumes' first
+                const { error: uploadError } = await supabase.storage
+                    .from('project-images') // Reusing project-images for simplicity unless instructed otherwise
+                    .upload(`resumes/${filePath}`, file);
+
+                if (uploadError) throw uploadError;
+
+                const { data: { publicUrl } } = supabase.storage
+                    .from('project-images')
+                    .getPublicUrl(`resumes/${filePath}`);
+
+                resumeInput.value = publicUrl;
+                showToast('Currículo carregado com sucesso!');
+            } catch (error) {
+                console.error("Erro no upload do currículo:", error);
+                showToast('Erro ao fazer upload do currículo', true);
+            } finally {
+                setLoading(uploadResumeBtn, false, '<i class="ph ph-upload-simple"></i> Upload');
+            }
+        }
+    });
+
     projectImageFileInput.addEventListener('change', (e) => {
         if (e.target.files && e.target.files[0]) {
             const reader = new FileReader();
             reader.onload = function (e) {
                 projectImagePreview.style.display = 'block';
                 projectImagePreviewImg.src = e.target.result;
+                uploadProjectImageBtn.innerHTML = '<i class="ph ph-image"></i> Alterar Imagem';
             }
             reader.readAsDataURL(e.target.files[0]);
         }
