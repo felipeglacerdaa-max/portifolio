@@ -217,6 +217,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 .upload(filePath, file);
 
             if (uploadError) {
+                console.error("Detalhes do Erro de Upload no Supabase:", uploadError);
                 setLoading(document.getElementById('save-project-btn'), false, id ? 'Atualizar Projeto <i class="ph ph-check"></i>' : 'Adicionar Projeto <i class="ph ph-plus"></i>');
                 showToast('Erro ao fazer upload da imagem', true);
                 return;
