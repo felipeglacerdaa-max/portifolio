@@ -10,6 +10,15 @@ if(navToggle){
     })
 }
 
+/*===== CLOSE MENU ON CLICK OUTSIDE =====*/
+document.addEventListener('click', (e) => {
+    if (navMenu && navToggle && navMenu.classList.contains('show-menu')) {
+        if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+            navMenu.classList.remove('show-menu')
+        }
+    }
+})
+
 /*===== HIDE MENU ON LINK CLICK =====*/
 function linkAction(){
     const navMenu = document.getElementById('nav-menu')

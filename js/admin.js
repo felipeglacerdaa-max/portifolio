@@ -18,6 +18,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     // =========== NAVEGAÇÃO ENTRE SEÇÕES ===========
     const navButtons = document.querySelectorAll('.section-nav__btn');
     const sections = document.querySelectorAll('.admin__section');
+    const navMenu = document.getElementById('nav-menu');
+    const navToggle = document.getElementById('nav-toggle');
+
+    if (navToggle) {
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('show-menu');
+        });
+    }
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (navMenu && navToggle && navMenu.classList.contains('show-menu')) {
+            if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+                navMenu.classList.remove('show-menu');
+            }
+        }
+    });
 
     navButtons.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -28,6 +45,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             btn.classList.add('active');
             document.getElementById(`${target}-section`).classList.add('active');
+
+            // Close mobile menu on click
+            if (navMenu) {
+                navMenu.classList.remove('show-menu');
+            }
         });
     });
 
